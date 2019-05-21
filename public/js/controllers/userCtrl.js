@@ -27,7 +27,7 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
                         success: response.data.success,
                         error: response.data.error
                     };
-                    setTimeout($scope.login, 2000);
+                    setTimeout($scope.login, 1500);
                     $('#collapseErrorLogin').collapse();  
                 } else {
                     $scope.errorData = {
@@ -42,8 +42,10 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
 	
 	$scope.login = function(){
         var user = $scope.user;
+        console.log($scope.user);
+        console.log(user);
 
-        if(user.username){
+        if(user != undefined && user.username){
             userFactory.login(user.username, function(response){
                 if(response.data.success){
                     var cookie = {
@@ -66,7 +68,7 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
         } else {
             $scope.errorData = {
                 success: false,
-                error: "Merci de compléter les deux champs."
+                error: "Merci de sélectionner votre profil."
             };
             $('#collapseErrorLogin').collapse();
         }

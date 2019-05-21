@@ -20,6 +20,10 @@
                         <option ng-repeat="x in users" value="{{x.username}}">{{x.username}}</option>
                     </select><br><br>
                     <button type="summit" class="btn btn-primary"><h2>Connexion</h2></button>
+                    <br><br>
+                    <div class="alert" role="alert"  ng-class="{'alert-success': errorData.success===true, 'alert-danger': errorData.success===false}">
+                        {{errorData.error}}
+                    </div>
                 </form>
             </h2>
 		</div>
