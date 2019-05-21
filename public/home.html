@@ -1,0 +1,22 @@
+<div ng-controller="userCtrl">
+	<!-- Tête de Page -->
+    <nav class="navbar bg-dark text-light">
+            <a class="navbarbrand">
+                <h2>Bienvenue {{user.username}}</h2>
+            </a>
+            <div class='my-2 my-sm-0'>
+                <button class="btn btn-danger my-2 my-sm-0" type="button"
+            ng-click="logout()">D&eacute;connexion</button>
+            </div>
+        </nav>
+
+	<!-- Corps de Page -->
+    <main class="bg-white">
+		<div id="mainid">
+			<h2>
+				Vous allez pouvoir tester votre acuité visuelle !<br><br>
+			</h2>
+			<a class="btn btn-primary" href="./"><h2>Démarrer le test</h2></a><br>
+		</div>
+    </main>
+</div>

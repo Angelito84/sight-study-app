@@ -1,0 +1,47 @@
+<div ng-controller="userCtrl">
+    <!-- Tête de Page -->
+    <nav class="navbar bg-dark text-light">
+        <a class="navbarbrand">
+            <!--h2>Bienvenue {{user.username}}</h2-->
+        </a>
+        <div class='my-2 my-sm-0'>
+            <button class="btn btn-info" type="button"
+            ng-click="registerurl()">Inscription</button>
+        </div>
+    </nav>
+
+	<!-- Corps de Page -->
+    <main class="bg-white">
+		<div id="mainid">
+			<h2>
+                <form ng-submit="login()">
+                    <legend><h2>Veuillez selectionner votre profil :</h2></legend>
+                    <SELECT name="nom" size="1" ng-repeat="x in users">
+                        {{x.username}}
+                    </SELECT><br><br>
+
+                    <button type="summit" class="btn btn-primary"><h2>Connexion</h2></button>
+                </form>
+                <div ng-repeat="x in users">
+                    <p>{{x}}</p>
+                    {{x.username}}
+                </div>
+                <!--ul class="list-group card-text">
+                        <li class="d-flex justify-content-between align-items-center"
+                        ng-repeat="x in users">
+                        {{x.username}}
+                        <button type="button" class="close supp" aria-label="Close"
+                            ng-click="removeCollaborator(x._id, collaborator)"
+                            ng-show="x.author == user.username">
+                            <span aria-hidden="true"><i class="fas fa-minus"></i></span>
+                        </button>
+                    </li>
+                    </ul>
+                    <ul class="list-group" ng-repeat="x in users | orderBy:'id':true">
+                            <li class="list-group-item">{{x.username}}
+                                </li>
+                                </ul-->
+            </h2>
+		</div>
+    </main>
+</div>
