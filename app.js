@@ -101,8 +101,7 @@ app.post("/loginUser", function(req, res){
 
 // Renvoie les utilisateurs
 app.get("/getUserSet", function(req, res){
-    var users = undefined
-    dataLayer.getUserSet(users, function(response){
+    dataLayer.getUserSet(function(response){
         res.send(response);
     });
 });

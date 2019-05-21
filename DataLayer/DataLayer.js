@@ -18,8 +18,7 @@ var dataLayer = {
     },
 	
     // Permet de récupérer la liste des utilisateurs
-    getUserSet : function(user, callback){
-        var query = {};
+    getUserSet : function(callback){
         db.collection("User").find().toArray(function(err, list_user) {
             if(err) throw err;
             

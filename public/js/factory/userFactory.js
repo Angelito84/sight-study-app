@@ -32,7 +32,7 @@ sightstudyapp.factory('userFactory', ['$http', function($http) {
         });
     };
     
-    factory.getUserSet = function(user,callback){
+    factory.getUserSet = function(callback){
         $http({
             method: 'GET',
             url: '/getUserSet',

@@ -73,8 +73,10 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
     };
 
     $scope.refreshUserSet = function () {
-        userFactory.getUserSet(user,function (response) {
+        userFactory.getUserSet(function (response) {
             $scope.users = response.data;
         });
     }
+
+    $scope.refreshUserSet();
 }]);
