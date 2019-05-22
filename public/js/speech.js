@@ -11,7 +11,7 @@ var recognition;
 var lastStartedAt;
 var grammar = ''
 var speechRecognitionList;
-
+var oeil ="droite"; 
 var nb_letter_max= 30; 
 
 var nb_letter_said = 0 ; 
@@ -133,7 +133,7 @@ function end(){
         i++;
     }
     if(total_correct>20) total_correct+=30;
-    else alert("votre score est : " + total_correct + " \n il faut faire un autre test (-1m) et l'ajouter a votre score");  
+    //else alert("votre score est : " + total_correct + " \n il faut faire un autre test (-1m) et l'ajouter a votre score");  
     
     var av="";
     last_correct_line+=1; // les lignes commencent à 0 dans le tableau
@@ -188,6 +188,16 @@ function end(){
     console.log("AV = " + av);
     console.log(new Date());
     //ecrire score dans BDD pour l'utilisateur
+    if(oeil=="droit"){
+        document.getElementById("affichage_lettre").innerHTML= " Passons à l'oeil gauche, veuillez cachez votre oeil droit"
+        oeil="gauche";
+        setTimeout(next_letter,8000);// on attend 8 sec avant de passer a l'autre oeil puis on lance le test 
+        
+        startReco();
+    }
+    else{
+        // retour à "home.html";
+    }
 
 
 }
@@ -195,7 +205,7 @@ function end(){
 function startReco() {
     // Démarrage de la reconnaissance vocale
     lastStartedAt = new Date().getTime();
-    
+
     recognition.start();
     
 }
