@@ -1,0 +1,39 @@
+<div ng-controller="userCtrl">
+    <!-- Tête de Page -->
+    <nav class="navbar bg-dark text-light">
+        <a class="navbarbrand">
+            <!--h2>Bienvenue {{user.username}}</h2-->
+        </a>
+        <div class='my-2 my-sm-0'>
+            <button class="btn btn-info" type="button"
+            ng-click="loginurl()">Connexion</button>
+        </div>
+    </nav>
+
+	<!-- Corps de Page -->
+    <main class="bg-white">
+		<div id="mainid">
+			<h2>
+                <form ng-submit="createUser()">
+                    <legend><h2>Création d'un profil :</h2></legend>
+                    <input type="text" ng-model="userR.username" placeholder="Nom d'utilisateur"><br><br>
+                    <button type="summit" class="btn btn-primary"><h2>Inscription</h2></button>
+                    <br><br>
+                    <div class="alert" role="alert"  ng-class="{'alert-success': errorData.success===true, 'alert-danger': errorData.success===false}">
+                        {{errorData.error}}
+                    </div>
+                </form>
+            </h2>
+		</div>
+    </main>
+    
+    <!-- Pied de Page -->
+    <footer class="bg-dark text-light">
+            <span id="copyright">
+                &copy;
+                <script>
+                    document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                </script> - Bastien ROURE & Tao VU HOAI
+            </span>
+        </footer>
+</div>

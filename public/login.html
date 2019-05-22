@@ -1,0 +1,41 @@
+<div ng-controller="userCtrl">
+    <!-- Tête de Page -->
+    <nav class="navbar bg-dark text-light">
+        <a class="navbarbrand">
+            <!--h2>Bienvenue {{user.username}}</h2-->
+        </a>
+        <div class='my-2 my-sm-0'>
+            <button class="btn btn-info" type="button"
+            ng-click="registerurl()">Inscription</button>
+        </div>
+    </nav>
+
+	<!-- Corps de Page -->
+    <main class="bg-white">
+		<div id="mainid">
+			<h2>
+                <form ng-submit="login()">
+                    <legend><h2>Veuillez selectionner votre profil :</h2></legend>
+                    <select name="repeatSelect" id="repeatSelect" ng-model="user.username">
+                        <option ng-repeat="x in users" value="{{x.username}}">{{x.username}}</option>
+                    </select><br><br>
+                    <button type="summit" class="btn btn-primary"><h2>Connexion</h2></button>
+                    <br><br>
+                    <div class="alert" role="alert"  ng-class="{'alert-success': errorData.success===true, 'alert-danger': errorData.success===false}">
+                        {{errorData.error}}
+                    </div>
+                </form>
+            </h2>
+		</div>
+    </main>
+    
+    <!-- Pied de Page -->
+    <footer class="bg-dark text-light">
+            <span id="copyright">
+                &copy;
+                <script>
+                    document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                </script> - Bastien ROURE & Tao VU HOAI
+            </span>
+        </footer>
+</div>

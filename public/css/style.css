@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+}
+
+main {
+	text-align: center;
+}
+
+#mainid {
+    width: 100%;
+    max-width: 800px;
+    padding: 0px;
+    margin: auto;
+    margin-top: 7rem;
+}
+ 
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,32 @@
+<div ng-controller="userCtrl">
+	<!-- Tête de Page -->
+    <nav class="navbar bg-dark text-light">
+            <a class="navbarbrand">
+                <h2>Bienvenue {{user.username}}</h2>
+            </a>
+            <div class='my-2 my-sm-0'>
+                <button class="btn btn-danger my-2 my-sm-0" type="button"
+            ng-click="logout()">D&eacute;connexion</button>
+            </div>
+        </nav>
+
+	<!-- Corps de Page -->
+    <main class="bg-white">
+		<div id="mainid">
+			<h2>
+				Historique des tests de {{user.username}} :<br><br>
+            </h2>
+            <button class="btn btn-primary" type="button" ng-click="homeurl()"><h2>Accueil</h2></button><br>
+		</div>
+    </main>
+
+    <!-- Pied de Page -->
+    <footer class="bg-dark text-light">
+            <span id="copyright">
+                &copy;
+                <script>
+                    document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                </script> - Bastien ROURE & Tao VU HOAI
+            </span>
+        </footer>
+</div>
