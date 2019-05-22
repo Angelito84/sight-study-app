@@ -2,6 +2,18 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
     $scope.userData = {};
 	$scope.user = $cookies.getObject('user');
     
+    $scope.homeurl = function () {
+        $state.go('home');
+    },
+
+    $scope.testurl = function () {
+        $state.go('test');
+    },
+
+    $scope.statsurl = function () {
+        $state.go('stats');
+    },
+
     $scope.loginurl = function () {
         $state.go('login');
     },
@@ -42,8 +54,6 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
 	
 	$scope.login = function(){
         var user = $scope.user;
-        console.log($scope.user);
-        console.log(user);
 
         if(user != undefined && user.username){
             userFactory.login(user.username, function(response){
@@ -81,4 +91,9 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
     }
 
     $scope.refreshUserSet();
+
+    $scope.teststart = function () {
+        next_letter(tailles[line]);
+        startReco();
+    }
 }]);

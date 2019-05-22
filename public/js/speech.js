@@ -132,7 +132,8 @@ function end(){
         if(score_by_line[i]>3)last_correct_line=i;
         i++;
     }
-    if(total_correct>20) total_correct+=30;  
+    if(total_correct>20) total_correct+=30;
+    else alert("votre score est : " + total_correct + " \n il faut faire un autre test (-1m) et l'ajouter a votre score");  
     
     var av="";
     last_correct_line+=1; // les lignes commencent à 0 dans le tableau

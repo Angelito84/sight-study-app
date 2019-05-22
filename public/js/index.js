@@ -30,10 +30,18 @@ sightstudyapp.config(function($stateProvider){
         controller: "userCtrl"
     }
 
+    var stastState = {
+        name: "stats",
+        url: "/stats/",
+        templateUrl: "stats.html",
+        controller: "userCtrl"
+    }
+
     $stateProvider.state(loginState);
     $stateProvider.state(registerState);
     $stateProvider.state(homeState);
     $stateProvider.state(testState);
+    $stateProvider.state(stastState);
     
 });
 
