@@ -183,10 +183,10 @@ function end(){
 
     }
 
-    console.log("LCL : " + last_correct_line);
+    //console.log("LCL : " + last_correct_line);
     console.log("score ETDRS : " + total_correct);
     console.log("AV = " + av);
-    
+    console.log(new Date());
     //ecrire score dans BDD pour l'utilisateur
 
 
