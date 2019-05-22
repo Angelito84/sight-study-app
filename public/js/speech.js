@@ -18,7 +18,6 @@ var nb_letter_said = 0 ;
 var letter_on_line=5;
 var letter_to_guess;
 var bad_letter = 0 ;
-var first_size = "1000%";
 var line =0;
 var score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var nb_line_max = 14;
@@ -69,7 +68,6 @@ if (!SpeechRecognition) {
     };
     
 
-
     // Evènement de résultat de la reconnaissance vocale
     recognition.onresult = function (event) {
         var found = false  ;
@@ -96,6 +94,8 @@ if (!SpeechRecognition) {
             
             };
 }
+
+
 function analyse_recog(found){
     nb_letter_said++;
     if(!found){
