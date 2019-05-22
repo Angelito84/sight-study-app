@@ -3,7 +3,9 @@ body {
     min-height: 100vh;
     flex-direction: column;
 }
-
+h2{
+    font-size: 1.5rem;
+}
 header {
     text-align: center;
 }
