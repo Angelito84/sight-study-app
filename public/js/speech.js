@@ -24,7 +24,7 @@ var score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var nb_line_max = 14;
 var tailles = ['0.58cm','0.484cm',' 0.3635cm ',' 0.2905cm ', '0.2325cm','0.1815cm','0.1455cm',' 0.116cm ',' 0.092cm ', '0.0654cm','0.058cm','0.046cm',' 0.03635cm ',' 0.02905cm '];
 var stop=false; 
-
+var old_letter;
 
 if (!SpeechRecognition) {
     console.log('Pas de reconnaissance vocale disponible');
@@ -48,9 +48,7 @@ if (!SpeechRecognition) {
      
     // Evènement de début de la reconnaissance vocale
     recognition.onstart = function() {
-        next_letter(tailles[line]);
-        console.log('Démarrage de la reconnaissance');
-        
+        console.log('Démarrage de la reconnaissance'); 
     };
      
     // Evènement de fin de la reconnaissance vocale
@@ -63,12 +61,15 @@ if (!SpeechRecognition) {
             if (timeSinceLastStart < 3000) {
                 setTimeout(startReco, 3000-timeSinceLastStart);
             } else {
+                
                 // Démarrage de la reconnaissance vocale
                 startReco();
             }
         }
     };
- 
+    
+
+
     // Evènement de résultat de la reconnaissance vocale
     recognition.onresult = function (event) {
         var found = false  ;
@@ -85,9 +86,7 @@ if (!SpeechRecognition) {
                 console.log('Résultat = ' + texteReconnu);
             }
             analyse_recog(found);
-            recognition.end();
-            
-            
+            next_letter(tailles[line]);
             /* Synthèse vocale de ce qui a été reconnu
             var u = new SpeechSynthesisUtterance();
             u.text = texteReconnu;
@@ -193,10 +192,12 @@ function end(){
 
 }
 
-function startReco(letter) {
+function startReco() {
     // Démarrage de la reconnaissance vocale
     lastStartedAt = new Date().getTime();
+    
     recognition.start();
+    
 }
 function next_letter(size){
     
@@ -239,6 +240,8 @@ function next_letter(size){
     //startReco(letter);
     console.log("letter is " + letter );
     letter_to_guess=letter;
+    if(old_letter==letter)next_letter(size);
+    old_letter=letter;
     //startReco();
 }
 
