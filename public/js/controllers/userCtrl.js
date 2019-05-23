@@ -1,9 +1,13 @@
 sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFactory', function ($cookies, $scope, $state, userFactory) {
-    $scope.userData = {};
 	$scope.user = $cookies.getObject('user');
     
     $scope.homeurl = function () {
-        $state.go('home');
+        if($scope.user) {
+            $state.go('home');
+        }
+        else {
+            $state.go('login');
+        }
     },
 
     $scope.testurl = function () {
@@ -31,7 +35,7 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
 
 	$scope.createUser = function(){
         var user = $scope.userR;
-        if(user.username){
+        if(user != undefined && user.username){
             userFactory.createUser(user.username, function(response){
                 if(response.data.success){
                     $scope.user = $scope.userR;
@@ -84,16 +88,61 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
         }
     };
 
-    $scope.refreshUserSet = function () {
-        userFactory.getUserSet(function (response) {
+    $scope.createTest = function (req){
+        if ($scope.user.token != "") {
+            var testData = {
+                user: $scope.user,
+                etdrs_d: req.etdrs_d,
+                av_d: req.av_d,
+                etdrs_g: req.etdrs_g,
+                av_g: req.av_g
+            };
+            userFactory.createTest(testData, function (response) {
+                if(response.data.success){
+                    $state.go('home');
+                    $scope.errorData = {
+                        success: response.data.success,
+                        error: response.data.error
+                    };               
+                    $('#collapseErrorLogin').collapse();  
+                } else {
+                    $scope.errorData = {
+                        success: response.data.success,
+                        error: response.data.error
+                    };                    
+                    $('#collapseErrorInscription').collapse();
+                }
+            });
+        } else {
+            alert("Merci de vous reconnecter.");
+        }
+    },
+
+    $scope.refreshUser = function () {
+        userFactory.getUsers(function (response) {
             $scope.users = response.data;
         });
     }
 
-    $scope.refreshUserSet();
+    $scope.refreshTests = function () {
+        userFactory.getTests(function (response) {
+            $scope.tests = response.data.tests;
+        });
+    }
 
     $scope.teststart = function () {
         next_letter(tailles[line]);
         startReco();
+
+    }
+
+    $scope.goodurl = function () {
+        if(!$scope.user) {
+            $state.go('login');
+        }
+    }
+
+    $scope.copyright = function () {
+        $scope.varcopyright = document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()));
     }
 }]);

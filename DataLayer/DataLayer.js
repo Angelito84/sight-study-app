@@ -18,7 +18,7 @@ var dataLayer = {
     },
 	
     // Permet de récupérer la liste des utilisateurs
-    getUserSet : function(callback){
+    getUsers : function(callback){
         db.collection("User").find().toArray(function(err, list_user) {
             if(err) throw err;
             
@@ -45,7 +45,30 @@ var dataLayer = {
             callback(result);
 
         });
-    }
+    },
+
+    // Ajoute un test à une liste de test de l'utilisateur
+    createTest : function(user, testData, callback){
+        testData._id = MongoDB.ObjectID();
+        var query = { username: user.username };
+        var change = { $push : {tests: testData}};
+        // On utilise updateOne car les users ont une array de test
+        db.collection("User").updateOne(query,change, function(err, result) {
+            if(err) throw err;
+
+            callback();
+        });
+    },
+/*
+    // Permet de récupérer la liste des tests de l'utilisateur
+    getTests : function(tests, callback){
+        var query = {_id: {$in: tests}};
+        db.collection("User").find().toArray(function(err, list_user) {
+            if(err) throw err;
+            
+            callback(list_user);
+        });
+    },*/
 };
 
 module.exports = dataLayer;

@@ -10,7 +10,7 @@ var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 var recognition;
 var lastStartedAt;
 var speechRecognitionList;
-var oeil ="droite"; 
+var oeil ="droit"; 
 var nb_letter_max= 30; 
 
 var nb_letter_said = 0 ; 
@@ -23,6 +23,13 @@ var nb_line_max = 14;
 var tailles = ['0.58cm','0.484cm',' 0.3635cm ',' 0.2905cm ', '0.2325cm','0.1815cm','0.1455cm',' 0.116cm ',' 0.092cm ', '0.0654cm','0.058cm','0.046cm',' 0.03635cm ',' 0.02905cm '];
 var stop=false; 
 var old_letter;
+
+var testData = {
+    etdrs_d: 0,
+    av_d: 0,
+    etdrs_g: 0,
+    av_g: 0
+};
 
 if (!SpeechRecognition) {
     console.log('Pas de reconnaissance vocale disponible');
@@ -185,23 +192,28 @@ function end(){
     //console.log("LCL : " + last_correct_line);
     console.log("score ETDRS : " + total_correct);
     console.log("AV = " + av);
-    console.log(new Date());
-  
+
     bad_letter = 0 ;
     line =0;
     score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     stop=false;
-  
-    //ecrire score dans BDD pour l'utilisateur
+
     if(oeil=="droit"){
-        document.getElementById("affichage_lettre").innerHTML= " Passons à l'oeil gauche, veuillez cachez votre oeil droit"
+        testData.etdrs_d = total_correct;
+        testData.av_d = av;
+        document.getElementById("affichage_lettre").innerHTML= 'Passons &agrave; l&apos;&oelig;il gauche, veuillez cacher votre &oelig;il droit (<i class="fas fa-eye-slash"></i><i class="fas fa-eye"></i>)'
         oeil="gauche";
         setTimeout(next_letter,8000);// on attend 8 sec avant de passer a l'autre oeil puis on lance le test 
-        
+        //erreur console !!!!
+        //micro !!!!
         startReco();
     }
     else{
-        // retour à "home.html";
+        stop=true;
+        testData.etdrs_g = total_correct;
+        testData.av_g = av;
+        angular.element(document.getElementById("ctrlforjs")).scope().createTest(testData);
+        //résultat
     }
 
 

@@ -49,7 +49,7 @@ app.post("/createUser", function(req, res){
             if(userCheck != null && userCheck.username == user.username){
                 res.send({
                     success: false,
-                    error: user.username + " existe déjà."
+                    error: "L'utilisateur " + user.username + " existe déjà."
                 });
             } else {
                 console.log(user);
@@ -100,11 +100,70 @@ app.post("/loginUser", function(req, res){
 });
 
 // Renvoie les utilisateurs
-app.get("/getUserSet", function(req, res){
-    dataLayer.getUserSet(function(response){
+app.get("/getUsers", function(req, res){
+    dataLayer.getUsers(function(response){
         res.send(response);
     });
 });
+
+// Ajoute un test à une liste de test de l'utilisateur
+app.post("/savetest", function(req, res){
+    if(req.body && typeof req.body.user != 'undefined'){
+        var user = req.body.user;
+        var event = new Date();
+        var options = { year: 'numeric', month: 'numeric', day: 'numeric' , hour: "numeric" , minute: "numeric" };
+        var testData = {
+            date: event.toLocaleDateString('fr-FR', options),
+           etdrs_d: req.body.etdrs_d,
+            av_d: req.body.av_d,
+            etdrs_g: req.body.etdrs_g,
+            av_g: req.body.av_g
+        };
+        dataLayer.createTest(user, testData, function(){
+            res.send({
+                success: true
+            });
+        });
+
+    } else {
+        res.send({
+            success : false,
+            error : 'Un ou plusieurs arguments invalides.'
+        });
+    }
+});
+
+// Renvoie les tests
+app.get("/getTests", function(req, res){
+    var username = undefined;
+    // Vérifie si l'utilisateur est connecté
+    if(req.headers.cookie === undefined){
+        // Si il n'y a aucun cookie, on utilise le header 'Authorization' dans lequel sera rentré le token généré durant la connexion
+        username = jwtUtils.getUserName(req.headers.authorization);
+    } else {        
+        // Sinon, on parse le cookie pour récupérer le token et vérifier sa validité
+        var cookies = req.headers.cookie;
+        cookies = cookie.parse(cookies);
+        cookies = JSON.parse(cookies.user);
+        username = jwtUtils.getUserName(cookies.token);
+    }
+
+    // Si l'utilisateur n'est pas connecté ou que le token est invalide, on lui demande de se conneceter
+    if(username == undefined){
+        res.send({
+            success: false,
+            error: "Vous devez vous connecter."
+        });
+    } else {
+        var user = {
+            username: username
+        }
+        dataLayer.findUser(user, function(response){
+            res.send(response);
+        });
+    }
+});
+
 
 dataLayer.init(function(){
     app.listen(PORT);

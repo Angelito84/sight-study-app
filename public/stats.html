@@ -1,32 +1,73 @@
-<div ng-controller="userCtrl">
+<div ng-controller="userCtrl" ng-init="goodurl()">
 	<!-- Tête de Page -->
     <nav class="navbar bg-dark text-light">
-            <a class="navbarbrand">
-                <h2>Bienvenue {{user.username}}</h2>
-            </a>
-            <div class='my-2 my-sm-0'>
-                <button class="btn btn-danger my-2 my-sm-0" type="button"
+        <div id="navdivleft">
+            <h2>Bienvenue {{user.username}}</h2>
+        </div>
+        <div id="navdivcenter">
+            <button class="btn btn-dark my-2 my-sm-0" type="button"
+            ng-click="homeurl()"><h2>SIGHT STUDY APP</h2></button>
+        </div>
+        <div class='my-2 my-sm-0' id="navdivright">
+            <button class="btn btn-primary my-2 my-sm-0" type="button" 
+            ng-click="homeurl()">Accueil</button>
+            <button class="btn btn-danger my-2 my-sm-0" type="button"
             ng-click="logout()">D&eacute;connexion</button>
-            </div>
-        </nav>
+        </div>
+    </nav>
 
 	<!-- Corps de Page -->
     <main class="bg-white">
-		<div id="mainid">
+		<div id="mainid" ng-init="refreshTests()">
 			<h2>
 				Historique des tests de {{user.username}} :<br><br>
             </h2>
-            <button class="btn btn-primary" type="button" ng-click="homeurl()"><h2>Accueil</h2></button><br>
+            <div class="mx-auto  col-10" >
+                <div class="col-5 float-left">
+                    <h2>&OElig;il droit</h2>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">score ETDRS</th>
+                                <th scope="col">AV</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="x in tests">
+                            <td>{{ x.date }}</td>
+                            <td>{{ x.etdrs_d }}</td>
+                            <td>{{ x.av_d }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-5 float-right">
+                    <h2>&OElig;il gauche</h2>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">score ETDRS</th>
+                                <th scope="col">AV</th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="x in tests">
+                            <td>{{ x.date }}</td>
+                            <td>{{ x.etdrs_g }}</td>
+                            <td>{{ x.av_g }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 		</div>
     </main>
 
     <!-- Pied de Page -->
     <footer class="bg-dark text-light">
-            <span id="copyright">
-                &copy;
-                <script>
-                    document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-                </script> - Bastien ROURE & Tao VU HOAI
-            </span>
-        </footer>
+        <div>
+            &copy;
+            <span id="copyright" ng-init="copyright()"></span>
+            - Bastien ROURE & Tao VU HOAI
+        </div>
+    </footer>
 </div>

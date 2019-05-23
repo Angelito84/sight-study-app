@@ -3,9 +3,11 @@ body {
     min-height: 100vh;
     flex-direction: column;
 }
+
 h2{
     font-size: 1.5rem;
 }
+
 header {
     text-align: center;
 }
@@ -14,14 +16,27 @@ main {
 	text-align: center;
 }
 
+#navdivleft {
+    width: 40%;
+    text-align: left;
+}
+
+#navdivcenter {
+    width: 20%;
+    text-align: center;
+}
+
+#navdivright {
+    width: 40%;
+    text-align: right;
+}
+
 #mainid {
     width: 100%;
-    max-width: 800px;
     padding: 0px;
     margin: auto;
     margin-top: 7rem;
 }
- 
 
 footer {
     position: absolute;
