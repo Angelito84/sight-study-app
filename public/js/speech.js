@@ -9,7 +9,6 @@ var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 
 var recognition;
 var lastStartedAt;
-var grammar = ''
 var speechRecognitionList;
 var oeil ="droite"; 
 var nb_letter_max= 30; 
@@ -187,6 +186,12 @@ function end(){
     console.log("score ETDRS : " + total_correct);
     console.log("AV = " + av);
     console.log(new Date());
+  
+    bad_letter = 0 ;
+    line =0;
+    score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    stop=false;
+  
     //ecrire score dans BDD pour l'utilisateur
     if(oeil=="droit"){
         document.getElementById("affichage_lettre").innerHTML= " Passons à l'oeil gauche, veuillez cachez votre oeil droit"
