@@ -1,5 +1,5 @@
 // Importation de dataLayer
-var dataLayer = require('DataLayer/dataLayer');
+var dataLayer = require('./DataLayer/DataLayer');
 
 // Importation des modules importants.
 var express = require('express');
