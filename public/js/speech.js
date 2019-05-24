@@ -9,9 +9,8 @@ var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
 
 var recognition;
 var lastStartedAt;
-var grammar = ''
 var speechRecognitionList;
-
+var oeil ="droit"; 
 var nb_letter_max= 30; 
 
 var nb_letter_said = 0 ; 
@@ -24,6 +23,13 @@ var nb_line_max = 14;
 var tailles = ['0.58cm','0.484cm',' 0.3635cm ',' 0.2905cm ', '0.2325cm','0.1815cm','0.1455cm',' 0.116cm ',' 0.092cm ', '0.0654cm','0.058cm','0.046cm',' 0.03635cm ',' 0.02905cm '];
 var stop=false; 
 var old_letter;
+
+var testData = {
+    etdrs_d: 0,
+    av_d: 0,
+    etdrs_g: 0,
+    av_g: 0
+};
 
 if (!SpeechRecognition) {
     console.log('Pas de reconnaissance vocale disponible');
@@ -58,11 +64,15 @@ if (!SpeechRecognition) {
         var timeSinceLastStart = new Date().getTime()-lastStartedAt;
         if(!stop){
             if (timeSinceLastStart < 3000) {
-                setTimeout(startReco, 3000-timeSinceLastStart);
+                setTimeout(function(){
+                    lastStartedAt = new Date().getTime();
+                    recognition.start();
+                }, 3000-timeSinceLastStart);
             } else {
                 
                 // Démarrage de la reconnaissance vocale
-                startReco();
+                lastStartedAt = new Date().getTime();
+                recognition.start();
             }
         }
     };
@@ -133,7 +143,7 @@ function end(){
         i++;
     }
     if(total_correct>20) total_correct+=30;
-    else alert("votre score est : " + total_correct + " \n il faut faire un autre test (-1m) et l'ajouter a votre score");  
+    //else alert("votre score est : " + total_correct + " \n il faut faire un autre test (-1m) et l'ajouter a votre score");  
     
     var av="";
     last_correct_line+=1; // les lignes commencent à 0 dans le tableau
@@ -186,16 +196,53 @@ function end(){
     //console.log("LCL : " + last_correct_line);
     console.log("score ETDRS : " + total_correct);
     console.log("AV = " + av);
-    console.log(new Date());
-    //ecrire score dans BDD pour l'utilisateur
+
+    bad_letter = 0 ;
+    line =0;
+    score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    stop=false;
+    nb_letter_said = 0 ;
+
+    if(oeil=="droit"){
+        testData.etdrs_d = total_correct;
+        total_correct = 0;
+        testData.av_d = av;
+        document.getElementById("affichage_lettre").innerHTML= 'Passons &agrave; l&apos;&oelig;il gauche, veuillez cacher votre &oelig;il droit (<i class="fas fa-eye-slash"></i><i class="fas fa-eye"></i>)'
+        oeil="gauche";
+        setTimeout(next_letter,8000);// on attend 8 sec avant de passer a l'autre oeil puis on lance le test 
+        //erreur console !!!!
+        //micro !!!!
+        startReco();
+    }
+    else{
+        stop=true;
+        testData.etdrs_g = total_correct;
+        testData.av_g = av;
+        oeil="droit";
+        alert("Résultats : \n\u0153il droit: ETDRS : " + testData.etdrs_d + " et AV : " + testData.av_d + "\n\u0153il gauche: ETDRS : " + testData.etdrs_g + " et AV : " + testData.av_g); 
+        //document.getElementById("affichage_lettre").innerHTML= 'Résultats :<br>&oelig;il droit: ETDRS : ' + testData.etdrs_d + ' et AV : ' + testData.av_d + '<br>&oelig;il gauche: ETDRS : ' + testData.etdrs_g + ' et AV : ' + testData.av_g + '<br><button class="btn btn-primary my-2 my-sm-0" type="button" ng-click="createTest(testData)"><h2>Accueil</h2></button>'
+        angular.element(document.getElementById("ctrlforjs")).scope().createTest(testData);
+        
+        //résultat
+    }
 
 
 }
 
 function startReco() {
     // Démarrage de la reconnaissance vocale
-    lastStartedAt = new Date().getTime();
     
+    nb_letter_max= 30; 
+    stop=false; 
+    nb_letter_said = 0 ; 
+    letter_on_line=5;
+    letter_to_guess;
+    bad_letter = 0 ;
+    line =0;
+    score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    nb_line_max = 14;
+    old_letter="";
+    lastStartedAt = new Date().getTime();
     recognition.start();
     
 }

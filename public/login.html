@@ -1,10 +1,13 @@
-<div ng-controller="userCtrl">
+<div ng-controller="userCtrl" ng-init="refreshUser()">
     <!-- Tête de Page -->
     <nav class="navbar bg-dark text-light">
-        <a class="navbarbrand">
-            <!--h2>Bienvenue {{user.username}}</h2-->
-        </a>
-        <div class='my-2 my-sm-0'>
+        <div id="navdivleft">
+        </div>
+        <div id="navdivcenter">
+            <button class="btn btn-dark my-2 my-sm-0" type="button"
+            ng-click="homeurl()"><h2>SIGHT STUDY APP</h2></button>
+        </div>
+        <div class='my-2 my-sm-0' id="navdivright">
             <button class="btn btn-info" type="button"
             ng-click="registerurl()">Inscription</button>
         </div>
@@ -31,11 +34,10 @@
     
     <!-- Pied de Page -->
     <footer class="bg-dark text-light">
-            <span id="copyright">
-                &copy;
-                <script>
-                    document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-                </script> - Bastien ROURE & Tao VU HOAI
-            </span>
-        </footer>
+        <div>
+            &copy;
+            <span id="copyright" ng-init="copyright()"></span>
+            - Bastien ROURE & Tao VU HOAI
+        </div>
+    </footer>
 </div>
