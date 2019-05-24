@@ -64,11 +64,15 @@ if (!SpeechRecognition) {
         var timeSinceLastStart = new Date().getTime()-lastStartedAt;
         if(!stop){
             if (timeSinceLastStart < 3000) {
-                setTimeout(startReco, 3000-timeSinceLastStart);
+                setTimeout(function(){
+                    lastStartedAt = new Date().getTime();
+                    recognition.start();
+                }, 3000-timeSinceLastStart);
             } else {
                 
                 // Démarrage de la reconnaissance vocale
-                startReco();
+                lastStartedAt = new Date().getTime();
+                recognition.start();
             }
         }
     };
@@ -197,9 +201,11 @@ function end(){
     line =0;
     score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
     stop=false;
+    nb_letter_said = 0 ;
 
     if(oeil=="droit"){
         testData.etdrs_d = total_correct;
+        total_correct = 0;
         testData.av_d = av;
         document.getElementById("affichage_lettre").innerHTML= 'Passons &agrave; l&apos;&oelig;il gauche, veuillez cacher votre &oelig;il droit (<i class="fas fa-eye-slash"></i><i class="fas fa-eye"></i>)'
         oeil="gauche";
@@ -212,9 +218,11 @@ function end(){
         stop=true;
         testData.etdrs_g = total_correct;
         testData.av_g = av;
+        oeil="droit";
         alert("Résultats : \n\u0153il droit: ETDRS : " + testData.etdrs_d + " et AV : " + testData.av_d + "\n\u0153il gauche: ETDRS : " + testData.etdrs_g + " et AV : " + testData.av_g); 
         //document.getElementById("affichage_lettre").innerHTML= 'Résultats :<br>&oelig;il droit: ETDRS : ' + testData.etdrs_d + ' et AV : ' + testData.av_d + '<br>&oelig;il gauche: ETDRS : ' + testData.etdrs_g + ' et AV : ' + testData.av_g + '<br><button class="btn btn-primary my-2 my-sm-0" type="button" ng-click="createTest(testData)"><h2>Accueil</h2></button>'
         angular.element(document.getElementById("ctrlforjs")).scope().createTest(testData);
+        
         //résultat
     }
 
@@ -223,8 +231,18 @@ function end(){
 
 function startReco() {
     // Démarrage de la reconnaissance vocale
+    
+    nb_letter_max= 30; 
+    stop=false; 
+    nb_letter_said = 0 ; 
+    letter_on_line=5;
+    letter_to_guess;
+    bad_letter = 0 ;
+    line =0;
+    score_by_line = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    nb_line_max = 14;
+    old_letter="";
     lastStartedAt = new Date().getTime();
-
     recognition.start();
     
 }
