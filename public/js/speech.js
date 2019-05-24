@@ -212,6 +212,8 @@ function end(){
         stop=true;
         testData.etdrs_g = total_correct;
         testData.av_g = av;
+        alert("Résultats : \n\u0153il droit: ETDRS : " + testData.etdrs_d + " et AV : " + testData.av_d + "\n\u0153il gauche: ETDRS : " + testData.etdrs_g + " et AV : " + testData.av_g); 
+        //document.getElementById("affichage_lettre").innerHTML= 'Résultats :<br>&oelig;il droit: ETDRS : ' + testData.etdrs_d + ' et AV : ' + testData.av_d + '<br>&oelig;il gauche: ETDRS : ' + testData.etdrs_g + ' et AV : ' + testData.av_g + '<br><button class="btn btn-primary my-2 my-sm-0" type="button" ng-click="createTest(testData)"><h2>Accueil</h2></button>'
         angular.element(document.getElementById("ctrlforjs")).scope().createTest(testData);
         //résultat
     }
