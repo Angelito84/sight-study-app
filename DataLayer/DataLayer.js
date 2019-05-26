@@ -59,6 +59,17 @@ var dataLayer = {
             callback();
         });
     },
+
+    // Permet de trouver un utilisateur
+    findmdp : function(callback){
+        var query = { name: "password"};
+        db.collection("mdp").findOne(query, function(err, result){   
+            if(err) throw err;
+            
+            callback(result);
+
+        });
+    },
 /*
     // Permet de récupérer la liste des tests de l'utilisateur
     getTests : function(tests, callback){

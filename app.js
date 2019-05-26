@@ -6,12 +6,12 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var bodyParser = require('body-parser');
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 var jwtUtils = require('./utils/jwt.utils.js');
 var cookie = require('cookie');
 
 // Sel pour bcrypt
-//const saltRounds = 10;
+const saltRounds = 10;
 
 // PORT dynamique pour heroku ou localhost
 const PORT = process.env.PORT || 5000;
@@ -71,11 +71,34 @@ app.post("/createUser", function(req, res){
     }
 });
 
+// Connexion d'un page
+app.post("/unlockpass", function(req, res){
+    if(req.body && typeof req.body.password != 'undefined'){
+        pass = req.body;
+        dataLayer.findmdp(function(dtSet){
+            passCheck = dtSet;
+            var checkPassword = bcrypt.compareSync(pass.password, passCheck.password);
+            if(checkPassword) {
+                res.send({
+                    success: true,
+                    // Le token nous sera utile pour ionic, il sera envoyé dans le header 'Authorization' et aussi dans le cookie si le navigateur le permet
+                    token: jwtUtils.generateTokenForpassword(password)
+                });
+            };
+        });
+    } else {
+        res.send({
+            success: false,
+            error: "Mot de passe invalide."
+        });
+    }
+});
+
 // Connexion d'un utilisateur
 app.post("/loginUser", function(req, res){
     if(req.body && typeof req.body.username != 'undefined'){
-        user = req.body;
-        dataLayer.findUser(user,function(dtSet){
+        password = req.body;
+        dataLayer.findUser(password,function(dtSet){
             userCheck = dtSet;
             if(userCheck != null && userCheck.username == user.username){
 				res.send({

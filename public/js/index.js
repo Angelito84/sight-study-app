@@ -2,6 +2,13 @@ var sightstudyapp = angular.module('sightstudyapp', ['ui.router','ngCookies']);
 
 sightstudyapp.config(function($stateProvider){
     
+    var unlockState = {
+        name: "lock",
+        url: "/lock/",
+        templateUrl: "lock.html",
+        controller: "userCtrl"
+    }
+
     var loginState = {
         name: "login",
         url: "/login/",
@@ -37,6 +44,7 @@ sightstudyapp.config(function($stateProvider){
         controller: "userCtrl"
     }
 
+    $stateProvider.state(lockState);
     $stateProvider.state(loginState);
     $stateProvider.state(registerState);
     $stateProvider.state(homeState);

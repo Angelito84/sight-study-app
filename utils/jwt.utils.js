@@ -15,6 +15,16 @@ module.exports = {
         })
     },
 
+    generateTokenForpassword: function(password) {
+        return jwt.sign({
+            password: password
+        },
+        JWT_SIGN_SECRET,
+        {
+            expiresIn: '1h'
+        })
+    },
+
     parseAuthorization: function(authorization) {
         return (authorization != null) ? authorization.replace('Bearer ', '') : null;
     },

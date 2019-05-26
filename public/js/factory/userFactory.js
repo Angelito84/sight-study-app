@@ -1,6 +1,22 @@
 sightstudyapp.factory('userFactory', ['$http', function($http) {
     var factory = {};
 
+    factory.unlock = function(password, callback){
+        var query = {
+            password: password
+        }
+
+        $http({
+            method: 'POST',
+            url: '/unlockpass',
+            data: query
+        }).then(function successCallback(response){
+            callback(response);
+        }, function errorCallback(err){
+            console.log('Error: ' + err.data.error);
+        });
+    };
+
     factory.createUser = function(username, callback) {
         var query = {
             username: username

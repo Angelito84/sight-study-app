@@ -1,5 +1,6 @@
 sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFactory', function ($cookies, $scope, $state, userFactory) {
-	$scope.user = $cookies.getObject('user');
+    $scope.user = $cookies.getObject('user');
+    $scope.pass = $cookies.getObject('password');
     
     $scope.homeurl = function () {
         if($scope.user) {
@@ -12,21 +13,18 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
 
 	$scope.unlock = function(){
         var password = $scope.password;
-        
-        console.log(password);
 
         if(password != ""){
-            userFactory.login(user.username, function(response){
+            userFactory.unlock(password, function(response){
                 if(response.data.success){
                     var cookie = {
-                        token: response.data.token,
-                        username: response.data.username
+                        token: response.data.token
                     };
                     var now = new Date();
                     //On fait un cookie qui dure qu'une journée.
                     var exp = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
-                    $cookies.putObject('user', cookie, {'expires': exp});
-                    $state.go('home');
+                    $cookies.putObject('password', cookie, {'expires': exp});
+                    $state.go('login');
                 } else {
                     $scope.errorData = {
                         success: response.data.success,
@@ -38,7 +36,7 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
         } else {
             $scope.errorData = {
                 success: false,
-                error: "Merci de sélectionner votre profil."
+                error: "Merci de renseigner le mot de passe."
             };
             $('#collapseErrorLogin').collapse();
         }
