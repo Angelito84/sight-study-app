@@ -1,4 +1,4 @@
-<div ng-controller="userCtrl" ng-init="refreshUser()">
+<div ng-controller="userCtrl" ng-init="goodurl()">
     <!-- Tête de Page -->
     <nav class="navbar bg-dark text-light">
         <div id="navdivleft">
@@ -14,7 +14,7 @@
     </nav>
 
 	<!-- Corps de Page -->
-    <main class="bg-white">
+    <main class="bg-white" ng-init="refreshUser()" >
 		<div id="mainid">
 			<h2>
                 <form ng-submit="login()">

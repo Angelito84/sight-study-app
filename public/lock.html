@@ -17,7 +17,7 @@
 			<h2>
                 <form ng-submit="unlock()">
                     <legend><h2>Mot de passe d'accès :</h2></legend>
-                    <input ng-model="password" class="form-control" placeholder="******" type="password">
+                    <input ng-model="password" placeholder="******" type="password"><br><br>
                     <button type="summit" class="btn btn-primary"><h2>Connexion</h2></button>
                     <br><br>
                     <div class="alert" role="alert"  ng-class="{'alert-success': errorData.success===true, 'alert-danger': errorData.success===false}">

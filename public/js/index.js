@@ -56,12 +56,16 @@ sightstudyapp.config(function($stateProvider){
 sightstudyapp.run(['$cookies','$state', '$timeout' , function($cookies,$state, $timeout) {
     // On verifie si le cookie existe et si il contient un token
     var user = $cookies.getObject('user');
-    if(user) {
-        $state.go('home');
+    var pass = $cookies.getObject('pass');
+    if(pass) {
+        if(user) {
+            $state.go('home');
+        }
+        else {
+            $state.go('login');
+        }
     }
     else {
-        $timeout(function(){
-            $state.go('login');
-        })
+        $state.go('lock');
     }
 }]);

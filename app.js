@@ -75,14 +75,18 @@ app.post("/createUser", function(req, res){
 app.post("/unlockpass", function(req, res){
     if(req.body && typeof req.body.password != 'undefined'){
         pass = req.body;
+        
         dataLayer.findmdp(function(dtSet){
             passCheck = dtSet;
             var checkPassword = bcrypt.compareSync(pass.password, passCheck.password);
+            //console.log(bcrypt.hashSync('test', 10));
             if(checkPassword) {
                 res.send({
                     success: true,
+                    _id: passCheck._id,
+					name: passCheck.name,
                     // Le token nous sera utile pour ionic, il sera envoyé dans le header 'Authorization' et aussi dans le cookie si le navigateur le permet
-                    token: jwtUtils.generateTokenForpassword(password)
+                    token: jwtUtils.generateTokenForpassword(passCheck)
                 });
             };
         });
@@ -97,8 +101,8 @@ app.post("/unlockpass", function(req, res){
 // Connexion d'un utilisateur
 app.post("/loginUser", function(req, res){
     if(req.body && typeof req.body.username != 'undefined'){
-        password = req.body;
-        dataLayer.findUser(password,function(dtSet){
+        user = req.body;
+        dataLayer.findUser(user,function(dtSet){
             userCheck = dtSet;
             if(userCheck != null && userCheck.username == user.username){
 				res.send({

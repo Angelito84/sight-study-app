@@ -1,29 +1,50 @@
 sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFactory', function ($cookies, $scope, $state, userFactory) {
     $scope.user = $cookies.getObject('user');
-    $scope.pass = $cookies.getObject('password');
+    $scope.pass = $cookies.getObject('pass');
+    //{{pass.name}}
     
     $scope.homeurl = function () {
-        if($scope.user) {
-            $state.go('home');
+        if($scope.pass) {
+            if($scope.user) {
+                $state.go('home');
+            }
+            else {
+                $state.go('login');
+            }
         }
         else {
-            $state.go('login');
+            $state.go('lock');
+        }
+    },
+
+    $scope.registerurl = function () {
+        if($scope.pass) {
+            if($scope.user) {
+                $state.go('home');
+            }
+            else {
+                $state.go('register');
+            }
+        }
+        else {
+            $state.go('lock');
         }
     },
 
 	$scope.unlock = function(){
         var password = $scope.password;
 
-        if(password != ""){
+        if(password != undefined){
             userFactory.unlock(password, function(response){
                 if(response.data.success){
                     var cookie = {
-                        token: response.data.token
+                        token: response.data.token,
+                        name: response.data.name
                     };
                     var now = new Date();
                     //On fait un cookie qui dure qu'une journée.
                     var exp = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
-                    $cookies.putObject('password', cookie, {'expires': exp});
+                    $cookies.putObject('pass', cookie, {'expires': exp});
                     $state.go('login');
                 } else {
                     $scope.errorData = {
@@ -62,7 +83,10 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
         if ($scope.user.token != "") {
             $cookies.remove('user');
         }
-        $state.go('login');
+        if ($scope.pass.token != "") {
+            $cookies.remove('pass');
+        }
+        $state.go('lock');
     },
 
 	$scope.createUser = function(){

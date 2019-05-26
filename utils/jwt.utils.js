@@ -17,7 +17,8 @@ module.exports = {
 
     generateTokenForpassword: function(password) {
         return jwt.sign({
-            password: password
+            _id: password._id,
+            name: password.name
         },
         JWT_SIGN_SECRET,
         {
