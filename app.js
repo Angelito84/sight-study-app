@@ -88,7 +88,12 @@ app.post("/unlockpass", function(req, res){
                     // Le token nous sera utile pour ionic, il sera envoyé dans le header 'Authorization' et aussi dans le cookie si le navigateur le permet
                     token: jwtUtils.generateTokenForpassword(passCheck)
                 });
-            };
+            } else {
+                res.send({
+                    success: false,
+                    error: "Mot de passe invalide."
+                });
+            }
         });
     } else {
         res.send({
