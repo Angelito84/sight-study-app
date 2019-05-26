@@ -12,6 +12,7 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
 
 	$scope.unlock = function(){
         var password = $scope.password;
+        
         console.log(password);
 
         if(password != ""){
