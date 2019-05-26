@@ -44,7 +44,7 @@ sightstudyapp.config(function($stateProvider){
         controller: "userCtrl"
     }
 
-    $stateProvider.state(lockState);
+    $stateProvider.state(unlockState);
     $stateProvider.state(loginState);
     $stateProvider.state(registerState);
     $stateProvider.state(homeState);
