@@ -10,6 +10,39 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
         }
     },
 
+	$scope.unlock = function(){
+        var password = $scope.password;
+        console.log(password);
+
+        if(password != ""){
+            userFactory.login(user.username, function(response){
+                if(response.data.success){
+                    var cookie = {
+                        token: response.data.token,
+                        username: response.data.username
+                    };
+                    var now = new Date();
+                    //On fait un cookie qui dure qu'une journée.
+                    var exp = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+                    $cookies.putObject('user', cookie, {'expires': exp});
+                    $state.go('home');
+                } else {
+                    $scope.errorData = {
+                        success: response.data.success,
+                        error: response.data.error
+                    };
+                    $('#collapseErrorLogin').collapse();              
+                }
+            });
+        } else {
+            $scope.errorData = {
+                success: false,
+                error: "Merci de sélectionner votre profil."
+            };
+            $('#collapseErrorLogin').collapse();
+        }
+    };
+
     $scope.testurl = function () {
         $state.go('test');
     },
@@ -55,7 +88,7 @@ sightstudyapp.controller('userCtrl', ['$cookies', '$scope', '$state', 'userFacto
             });
         }
     };
-	
+
 	$scope.login = function(){
         var user = $scope.user;
 
